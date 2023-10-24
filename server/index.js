@@ -25,8 +25,8 @@ app.post('/compress-image', upload.single('image'), (req, res) => {
   if (!imageBuffer) {
     return res.status(400).send('Invalid request data.');
   }
-  console.log("Image came from client ⚛️⚛️");
-  console.log("compressing_image ..... 🚀🚀 ");
+  console.log("Image came from client ⚛️⚛️🔥");
+  console.log("compressing_image ..... 🚀🚀💪💪 ");
   const inputImagePath = 'tempImage.jpg'; // Temporary input image path
   const outputImagePath = 'compressed.jpg'; // Output image path
 
@@ -45,13 +45,13 @@ app.post('/compress-image', upload.single('image'), (req, res) => {
       // Read the compressed image and send it to the client as 'compressedImage'
       const compressedImageData = fs.readFileSync(outputImagePath);
       const base64EncodedImage = compressedImageData.toString('base64');
-      console.log("image compressed .... 🥳🥂")
+      console.log("image compressed ✅✅🥳🥂")
       res.status(200).json({
         compressedImage: base64EncodedImage, // Send the compressed image as 'compressedImage'
       });
     } else {
-      console.error('Error in encoding worker:', message.error);
-      res.status(500).send('Image compression failed.');
+      console.error('Error in encoding worker ❌❌:', message.error);
+      res.status(500).send('Image compression failed. ❌❌');
     }
   });
 
@@ -59,5 +59,5 @@ app.post('/compress-image', upload.single('image'), (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+  console.log(`Server is listening on port ✅🥂 ${port}`);
 });
