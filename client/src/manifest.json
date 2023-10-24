@@ -1,0 +1,8 @@
+{
+  "manifest_version": 3,
+  "name": "Vin ImgCompressor",
+  "version": "1.0.1",
+  "action" : {
+    "default_popup": "index.html"
+  }
+}
