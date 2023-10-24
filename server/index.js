@@ -20,9 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Handle image compression request
 app.post('/compress-image', upload.single('image'), (req, res) => {
   const imageBuffer = req.file.buffer;
-  const compressionValue = req.body.compressionValue + 10;
+  const compressionValue = req.body.compressionValue;
 
-  if (!imageBuffer || !compressionValue) {
+  if (!imageBuffer) {
     return res.status(400).send('Invalid request data.');
   }
   console.log("Image came");

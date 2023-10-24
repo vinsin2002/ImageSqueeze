@@ -1,24 +1,26 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Loader from './Loader';
+
 function App() {
   const [compressionValue, setCompressionValue] = useState(0);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [compressedImageURL, setCompressedImageURL] = useState(null);
-  const [sizeReductionKB, setSizeReductionKB] = useState(0); // New state for size reduction
-  const [Loading,setLoading] = useState(false);
+  const [sizeReductionKB, setSizeReductionKB] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
   const handleSliderChange = (event) => {
     const newValue = event.target.value;
     setCompressionValue(newValue);
   };
 
-  const handleFileInput = async (event) => {
-    const file = event.target.files[0];
+  const handleFileInput = async (file) => {
     setLoading(true);
     if (file && file.type === 'image/jpeg') {
       setUploadedImage(URL.createObjectURL(file));
       const { compressedImageURL, sizeReductionKB } = await uploadImage(file);
       setCompressedImageURL(compressedImageURL);
-      setSizeReductionKB(sizeReductionKB); // Set the size reduction state
+      setSizeReductionKB(sizeReductionKB);
     } else {
       setLoading(false);
       alert('Please select a valid JPEG image file.');
@@ -68,9 +70,27 @@ function App() {
     }
   };
 
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    setIsDragging(false);
+    const file = event.dataTransfer.files[0];
+    handleFileInput(file);
+  };
+
   return (
     <div className="w-96 h-96 bg-gray-900 flex flex-wrap justify-center">
-      {Loading ? <Loader/> :compressedImageURL ? (
+      {loading ? (
+        <Loader />
+      ) : compressedImageURL ? (
         <div className="flex flex-col justify-center items-center">
           <h2 className="text-green-400 text-xl p-5">Compressed Image</h2>
           <img src={compressedImageURL} className="h-44" alt="Compressed" />
@@ -86,8 +106,12 @@ function App() {
         </div>
       ) : (
         <div
-          className="m-5 w-screen sm:w-auto flex-col justify-end"
-          onDragOver={(event) => event.preventDefault()}
+          className={`m-5 w-screen sm:w-auto flex-col justify-end ${
+            isDragging ? 'dragging' : ''
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
         >
           <h1 className="text-green-400 text-2xl">Compress your images</h1>
           <div className="m-2">
@@ -95,7 +119,7 @@ function App() {
               htmlFor="default-range"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Compression Quality : {compressionValue}%
+              Compression Factor : {compressionValue}
             </label>
             <input
               id="default-range"
@@ -111,7 +135,7 @@ function App() {
           <div className="flex items-center justify-center w-full">
             <label
               htmlFor="dropzone-file"
-              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover-bg-gray-800 dark:bg-gray-700 hover-bg-gray-100 dark:border-gray-600 dark:hover-border-gray-500 dark-hover-bg-gray-600"
+              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-700 dark:hover-bg-gray-500 dark-bg-gray-700 hover-bg-gray-500 dark:border-gray-600 dark:hover-border-gray-500 dark-hover-bg-gray-600"
             >
               {(
                 <>
@@ -140,7 +164,7 @@ function App() {
                     id="dropzone-file"
                     type="file"
                     className="hidden"
-                    onChange={handleFileInput}
+                    onChange={(event) => handleFileInput(event.target.files[0])}
                   />
                 </>
               )}
