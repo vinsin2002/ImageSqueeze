@@ -25,9 +25,8 @@ app.post('/compress-image', upload.single('image'), (req, res) => {
   if (!imageBuffer) {
     return res.status(400).send('Invalid request data.');
   }
-  console.log("Image came");
-  console.log(compressionValue);
-  console.log(imageBuffer);
+  console.log("Image came from client ⚛️⚛️");
+  console.log("compressing_image ..... 🚀🚀 ");
   const inputImagePath = 'tempImage.jpg'; // Temporary input image path
   const outputImagePath = 'compressed.jpg'; // Output image path
 
@@ -46,7 +45,7 @@ app.post('/compress-image', upload.single('image'), (req, res) => {
       // Read the compressed image and send it to the client as 'compressedImage'
       const compressedImageData = fs.readFileSync(outputImagePath);
       const base64EncodedImage = compressedImageData.toString('base64');
-
+      console.log("image compressed .... 🥳🥂")
       res.status(200).json({
         compressedImage: base64EncodedImage, // Send the compressed image as 'compressedImage'
       });
