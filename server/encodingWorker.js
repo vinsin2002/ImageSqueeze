@@ -9,7 +9,6 @@ function encodeImage(inputImagePath, outputImagePath, quality) {
     const rawImageDataIn = jpeg.decode(jpegDataIn);
 
     // Your image processing logic here (e.g., apply 4:2:0 chroma subsampling)
-
     // Encode the raw image data as JPEG
     const rawImageDataOut = {
       width: rawImageDataIn.width,
@@ -17,7 +16,7 @@ function encodeImage(inputImagePath, outputImagePath, quality) {
       data: rawImageDataIn.data, // Modify this as needed
     };
 
-    const encodedData = jpeg.encode(rawImageDataOut, quality);
+    const encodedData = jpeg.encode(rawImageDataOut);
 
     // Write the output image
     fs.writeFileSync(outputImagePath, encodedData.data);
