@@ -21,3 +21,5 @@ ImageSqueeze is a project developed between September 2023 and October 2023, emp
 - ```npm start ``` to start the server and listen for the requests from the chrome extension we just installed and returning the compressed image
 
 ## Screenshots : 
+
+![](https://photos.app.goo.gl/6BDVMgEBCw4LPiae6)
