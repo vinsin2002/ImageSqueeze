@@ -22,4 +22,4 @@ ImageSqueeze is a project developed between September 2023 and October 2023, emp
 
 ## Screenshots : 
 
-![](https://photos.app.goo.gl/6BDVMgEBCw4LPiae6)
+![](./client/public/client/Screenshot 2024-03-20 205643.png)
